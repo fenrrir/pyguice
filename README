@@ -1,0 +1,44 @@
+Guice [http://code.google.com/p/google-guice/] for python 3k
+
+class ImplHello:
+
+    def say_hello(self):
+        return "Hello World"
+
+
+class MockHello:
+
+
+    def say_hello(self):
+        pass
+
+
+@ImplementedBy(ImplHello)
+class Hello:
+
+    def say_hello(self):
+        raise
+
+
+
+class Test:
+
+    @Inject
+    def __init__(self, hello : Hello):
+        self.hello = hello
+
+
+    def run(self):
+        return self.hello.say_hello()
+
+
+
+
+t = Test()
+assert t.run() == "Hello World"
+
+Configuration('test').bind(Hello, MockHello).deploy()
+
+t = Test()
+assert t.run() == None
+
