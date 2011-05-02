@@ -42,3 +42,5 @@ Configuration('test').bind(Hello, MockHello).deploy()
 t = Test()
 assert t.run() == None
 
+
+
